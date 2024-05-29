@@ -1,95 +1,110 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { useState } from "react";
+import { css } from "@/styles/css";
+
+import { FactionCard } from "./faction-card";
+import { factionImages, factionsList } from "./factions-data";
+import { FactionImage } from "./faction-image";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  const [selectedIdx, setSelectedIdx] = useState(0);
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+  return (
+    <main className={css({ bgColor: "rgb(16, 18, 24)" })}>
+      <div
+        className={css({
+          display: "grid",
+          gridTemplateColumns: "auto 566px",
+          gap: "30px",
+          maxWidth: "990px",
+          marginX: "auto",
+          marginY: "80px 32px", // 145
+        })}
+      >
+        <div>
+          <h1 className={css({ mb: "30px", lineHeight: "tight" })}>
+            <span
+              className={css({
+                fontSize: "2.8rem",
+                letterSpacing: "wide",
+                fontWeight: "semibold",
+                color: "transparent",
+                WebkitTextStroke: "1px white",
+              })}
+            >
+              CHOOSE YOUR
+            </span>
+            <br />
+            <span
+              className={css({
+                fontSize: "4.3rem",
+                fontWeight: "semibold",
+                color: "white",
+                textShadow: "0px 0px 4px white",
+              })}
+            >
+              FACTION
+            </span>
+          </h1>
+          <p className={css({ mb: "35px", fontSize: "lg" })}>
+            Agents will be customizable, allowing you to select from among the
+            various factions in the game - will you fight for a global police
+            force seeking to enact a new brand of justice? Or will you battle
+            alongside a secret network of deviants and outcasts?
+          </p>
+          <p className={css({ mb: "35px", fontSize: "lg" })}>
+            Once you acquire your agent, the choice is yours. Pledging your
+            allegiance is no small decision - as your agent accrues Loyalty
+            Points over time, your choices truly matter.
+          </p>
+
+          <button className={styles.btn}>utility</button>
+        </div>
+
+        <FactionImage
+          layerImage={factionImages[selectedIdx].layerImage}
+          mainImage={factionImages[selectedIdx].mainImage}
         />
       </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={styles.scroller}>
+        {factionsList.map((faction, idx) => (
+          <FactionCard
+            key={faction.name}
+            faction={faction}
+            onClick={() => setSelectedIdx(idx)}
+            isActive={selectedIdx === idx}
+          />
+        ))}
       </div>
     </main>
   );
 }
+
+const styles = {
+  scroller: css({
+    display: "grid",
+    gridAutoFlow: "column",
+    gridAutoColumns: "240px", // set size of each card
+    paddingY: "50px",
+    overflowX: "auto",
+    overscrollBehaviorX: "contain",
+    scrollbarWidth: "none",
+  }),
+  btn: css({
+    marginLeft: "-3px",
+    textTransform: "uppercase",
+
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bgColor: "white",
+    color: "black",
+    height: "35px",
+    paddingX: "26px",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    // TODO: add border using another clipped element inside the main button
+    clipPath: "polygon(100% 0, 100% 55%, 88% 100%, 0 100%, 0 0)",
+  }),
+};
