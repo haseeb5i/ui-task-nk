@@ -60,7 +60,7 @@ export default defineConfig({
         "var(--m-size-1) 76px,var(--m-size-2) 77px,var(--m-size-3) 77px,var(--m-size-4) 77px,var(--m-size-5) 77px,var(--m-size-6) 76px",
       // add small delay between each m-size transition, to create stagger
       transition:
-        "--m-size-1 .3s, --m-size-2 .3s .05s, --m-size-3 .3s .1s, --m-size-4 .3s .15s, --m-size-5 .3s .2s, --m-size-6 .3s .25s",
+        "--m-size-1 .5s, --m-size-2 .5s .05s, --m-size-3 .5s .1s, --m-size-4 .5s .15s, --m-size-5 .5s .2s, --m-size-6 .5s .25s",
       _hover: {
         "--m-size-1": "100%",
         "--m-size-2": "100%",
